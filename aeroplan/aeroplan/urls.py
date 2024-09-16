@@ -16,9 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from article.views import index
+from . import views
+
+admin.site.site_header = "登录测试用"
+admin.site.site_title = 'Aeroplan Points Rate Checker'
+admin.site.index_title = 'Admin page'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
+    path('hello/', views.hello, name='hello'),
+    path('bbs/posts', views.get_posts, name='get_posts'),
 ]
