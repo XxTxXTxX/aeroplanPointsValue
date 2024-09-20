@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        input[type="text"], input[type="date"] {
+            padding: 8px;
+            width: 200px;
+            margin-right: 10px;
+        }
+        .input-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Conversion Form</h2>
+    <form action="{% url 'aerolan_view' %}" method="POST">
+        {% csrf_token %}
+
+        <!-- Departure and Arrival -->
+        <div class="form-group">
+            <label for="departure">Departure:</label>
+            <input type="text" id="departure" name="departure" value="{{ form.departure.value|default_if_none:'' }}" required>
+            <label for="arrival">Arrival:</label>
+            <input type="text" id="arrival" name="arrival" value="{{ form.arrival.value|default_if_none:'' }}" required>
+            <label for="base_fare">Base fare:</label>
+            <input type="text" id="base_fare" name="base_fare" value="{{ form.base_fare.value|default_if_none:'' }}" required>
+        </div>
+
+        <!-- Date (Optional) -->
+        <div class="form-group">
+            <label for="date">Date (optional):</label>
+            <input type="date" id="date" name="date" value="{{ form.date.value|date:'Y-m-d'|default_if_none:'' }}">
+        </div>
+
+        <!-- Points and Cash Fields -->
+        <div class="form-group">
+            {% for i in '1234'|make_list %}
+                <div class="input-row">
+                    <div>
+                        <label for="points{{ i }}">Points:</label>
+                        <input type="text" id="points{{ i }}" name="points{{ i }}" value="{{ form.initial.points|default_if_none:'' }}">
+                    </div>
+                    <div>
+                        <label for="cash{{ i }}">Cash:</label>
+                        <input type="text" id="cash{{ i }}" name="cash{{ i }}" value="{{ form.initial.cash|default_if_none:'' }}">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Convert</button>
+    </form>
+
+    <!-- Conversion result -->
+    <div class="results">
+        {% if results %}
+            <h3>Conversion Results:</h3>
+            {% for result in results %}
+                <p>{{ result.scheme }}: Cents Per Point = {{ result.rate }} (Points: {{ result.points }}, Cash: {{ result.cash }})</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

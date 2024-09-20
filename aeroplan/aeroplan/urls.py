@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+import bbs.views
+from article.views import index
 
 admin.site.site_header = "登录测试用"
 admin.site.site_title = 'Aeroplan Points Rate Checker'
@@ -25,5 +27,7 @@ admin.site.index_title = 'Admin page'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', views.hello, name='hello'),
+    path("", index, name="index"),
     path('bbs/posts', views.get_posts, name='get_posts'),
+    path('aeroplan/', bbs.views.aeroplan_view, name='aerolan_view'),
 ]

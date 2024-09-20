@@ -13,5 +13,8 @@ def get_posts(request):
     return render(request, 'post/index.html', {'posts': posts})
 
 def get_posts_if_404(request, title):
-    post = get_object_or_404(Post, title=title)
+    try:
+        post = Post.objects.get(title = title)
+    except Post.DoesNotExist:
+        raise Http404("Post not found")
     return render(request, 'post/detail.html', {'post': post})
