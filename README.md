@@ -1,6 +1,6 @@
 # Aeroplan Points Value Calculator
 
-This tool is a personal project I created as a hobby to help users maximize the value of their Aeroplan points when booking flights.
+This tool is a personal project I created as a hobby to help users maximize the value of their Aeroplan points when booking flights. (Project full used Django)
 
 ## Tool Purpose
 
